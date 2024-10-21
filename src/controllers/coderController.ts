@@ -16,6 +16,11 @@ class CoderController{
         const coder = await this.coderService.destroy(coder_id);
         return coder;
     }
+    
+    async update(coder_id:string, coderNew:Partial<ICoder>):Promise<ICoder | {message: string, error:unknown}>{
+        const coder = await this.coderService.update(coder_id, coderNew);
+        return coder;
+    }
 }
 
 export default new CoderController();

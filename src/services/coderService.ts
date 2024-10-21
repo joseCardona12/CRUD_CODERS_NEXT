@@ -27,4 +27,16 @@ export default class CoderService {
             return ({message: "Error with the destroy http", error: error});
         }
     }
+
+    async update(coder_id:string, coder:Partial<ICoder>): Promise<ICoder | {message: string, error:unknown}>{
+        if(!coder_id){
+            return ({message: "Coder id is required", error: new Error("Coder id is required")});
+        }
+        try{
+            const coderUpdated = this.httpClientUtil.put<ICoder>("coders", coder_id, coder);
+            return coderUpdated;
+        }catch(error:unknown){
+            return ({message: "Error with the update http", error: error});
+        }
+    }
 }

@@ -1,3 +1,5 @@
+import { ICoder } from "@/models";
+
 const baseUrl:string = "https://671642e233bc2bfe40bd2552.mockapi.io/api/v1/";
 
 export default class HttpClientUtil{
@@ -23,6 +25,18 @@ export default class HttpClientUtil{
             headers,
             method: "DELETE",
             cache: "no-store"
+        });
+        return await this.manageError(response);
+    }
+
+    async put<T>(url:string, id:string, coder: Partial<ICoder>):Promise<T>{
+        const {name, avatar} = coder;
+        const headers = await this.getHeaders();
+        const response = await fetch(`${this.baseUrl}/${url}/${id}`, {
+            headers,
+            method: "PUT",
+            cache: "no-store",
+            body: JSON.stringify({name,avatar})
         });
         return await this.manageError(response);
     }

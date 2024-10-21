@@ -1,4 +1,7 @@
 "use client";
+
+import { useState } from "react";
+
 interface IButtonProps{
     text:string,
     id:string,
