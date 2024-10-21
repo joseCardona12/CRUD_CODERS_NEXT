@@ -1,6 +1,6 @@
 "use client";
 import { ICoder } from "@/models"
-import {Button} from "@/components";
+import {Button, inputAlert, Loading} from "@/components";
 import { coderController } from "@/controllers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,18 +26,20 @@ export default function TableCoder({data}: ITableProps):React.ReactNode{
         setEditId(id);
         console.log(formData);
         if(!formData.name || !formData.avatar){
-            console.log({message: "Is necesary all params for update coder"});
+            inputAlert("Is necesary all params for update coder", "error");
             return;
         }
         setLoading(true);
         const coderUpdated = await useCoderController.update(id, formData);
         if("message" in coderUpdated){
+            inputAlert("Upss. There is an error", "error");
             console.log(`${coderUpdated.message} Error: ${coderUpdated.error}`);
             return;
         }
         setEditId("");
         setFormData(intialFormData);
         router.refresh();
+        inputAlert("Coder updated", "success");
         setLoading(false);
     }
     const handleDelete = async(id:string):Promise<void> =>{
@@ -53,8 +55,9 @@ export default function TableCoder({data}: ITableProps):React.ReactNode{
         })
     }
     return (
+        <>
+        {loading && <Loading />}
         <table>
-            {loading && <p>Loading...</p>   }
             <thead>
                 <tr>
                     <td>id</td>
@@ -85,5 +88,6 @@ export default function TableCoder({data}: ITableProps):React.ReactNode{
                 ))}
             </tbody>
         </table>
+        </>
     )
 }

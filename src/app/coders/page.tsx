@@ -1,4 +1,4 @@
-import { TableCoder } from "@/components";
+import { SectionCoders } from "@/components";
 import { coderController } from "@/controllers";
 import { ICoder } from "@/models";
 
@@ -9,8 +9,6 @@ export default async function CodersView(){
         return null;
     }
     return(
-        <div className="content-coders">
-            <TableCoder data={data} />
-        </div>
+        <SectionCoders data={data}/>
     )
 }
