@@ -12,13 +12,17 @@ class CoderController{
         return coders;
     }
 
-    async destroy(coder_id:string):Promise<ICoder | {message: string, error:unknown}>{
-        const coder = await this.coderService.destroy(coder_id);
+    async add(coderNew:Partial<ICoder>):Promise<ICoder | {message: string, error: unknown}>{
+        const coder = await this.coderService.create(coderNew);
         return coder;
     }
     
     async update(coder_id:string, coderNew:Partial<ICoder>):Promise<ICoder | {message: string, error:unknown}>{
         const coder = await this.coderService.update(coder_id, coderNew);
+        return coder;
+    }
+    async destroy(coder_id:string):Promise<ICoder | {message: string, error:unknown}>{
+        const coder = await this.coderService.destroy(coder_id);
         return coder;
     }
 }

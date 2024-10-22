@@ -19,15 +19,16 @@ export default class HttpClientUtil{
         return await this.manageError(response);
     };
 
-    async delete<T>(url:string, id: string):Promise<T>{
+    async post<T>(url:string, coder: Partial<ICoder>):Promise<T>{
         const headers = await this.getHeaders();
-        const response = await fetch(`${this.baseUrl}/${url}/${id}`, {
+        const response = await fetch(`${this.baseUrl}/${url}`,{
             headers,
-            method: "DELETE",
-            cache: "no-store"
+            method: "POST",
+            cache: "no-store",
+            body: JSON.stringify(coder)
         });
         return await this.manageError(response);
-    }
+    };
 
     async put<T>(url:string, id:string, coder: Partial<ICoder>):Promise<T>{
         const {name, avatar} = coder;
@@ -40,6 +41,17 @@ export default class HttpClientUtil{
         });
         return await this.manageError(response);
     }
+
+    async delete<T>(url:string, id: string):Promise<T>{
+        const headers = await this.getHeaders();
+        const response = await fetch(`${this.baseUrl}/${url}/${id}`, {
+            headers,
+            method: "DELETE",
+            cache: "no-store"
+        });
+        return await this.manageError(response);
+    }
+
 
     private async getHeaders():Promise<{}>{
         return {

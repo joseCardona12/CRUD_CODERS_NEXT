@@ -16,15 +16,13 @@ export default class CoderService {
             return ({message: "Error with the findAll http", error: error});
         }
     }
-    async destroy(coder_id:string):Promise<ICoder | {message:string, error:unknown}>{
-        if(!coder_id){
-            return ({message: "Coder id is required", error: new Error("Coder id is required")});
-        }
+
+    async create(coderNew:Partial<ICoder>): Promise<ICoder | {message: string, error:unknown}>{
         try{
-            const coder = this.httpClientUtil.delete<ICoder>("coders", coder_id);
+            const coder = this.httpClientUtil.post<ICoder>("coders", coderNew);
             return coder;
         }catch(error:unknown){
-            return ({message: "Error with the destroy http", error: error});
+            return ({message: "Error with the create http", error: error});
         }
     }
 
@@ -37,6 +35,18 @@ export default class CoderService {
             return coderUpdated;
         }catch(error:unknown){
             return ({message: "Error with the update http", error: error});
+        }
+    }
+
+    async destroy(coder_id:string):Promise<ICoder | {message:string, error:unknown}>{
+        if(!coder_id){
+            return ({message: "Coder id is required", error: new Error("Coder id is required")});
+        }
+        try{
+            const coder = this.httpClientUtil.delete<ICoder>("coders", coder_id);
+            return coder;
+        }catch(error:unknown){
+            return ({message: "Error with the destroy http", error: error});
         }
     }
 }
